@@ -29,7 +29,7 @@ public class AnimehereSiteHandler implements SiteHandler {
 			throws MalformedURLException {
 		URL siteUrl = new URL(Url);
 		BufferedReader siteReader;
-		int currentMax = 0;
+		int currentMax = -1;
 		try {
 			siteReader = new BufferedReader(new InputStreamReader(
 					siteUrl.openStream()));

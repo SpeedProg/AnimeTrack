@@ -34,7 +34,7 @@ public class TokyoinsidernetSiteHandler extends DefaultSiteHandler {
 	public int getLastEpisodeFor(String url, String regEx)
 			throws MalformedURLException {
 		URL siteUrl = new URL(url);
-		int episode = 0;
+		int episode = -1;
 		try {
 			String siteContent = getContentOfUrl(siteUrl);
 			/*

@@ -180,7 +180,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		JButton btnCheck = new JButton("Check");
 		btnCheck.setActionCommand("Check");
 		btnCheck.addActionListener(this);
-		
+
 		JButton btnUpdateAll = new JButton("Update All");
 		btnUpdateAll.setActionCommand("Update All");
 		btnUpdateAll.addActionListener(this);
@@ -234,24 +234,24 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		frame.getContentPane().add(lblRegex, "cell 0 4,alignx trailing");
 
 		textFieldRegex = new JTextField();
-		if (a!= null)
+		if (a != null)
 			textFieldRegex.setText(a.getRegEx());
 		frame.getContentPane().add(textFieldRegex, "cell 1 4,growx");
 		textFieldRegex.setColumns(10);
 
 		textPaneNotes = new JTextPane();
 		if (a != null)
-		textPaneNotes.setText(a.getNote());
+			textPaneNotes.setText(a.getNote());
 		frame.getContentPane().add(textPaneNotes, "cell 0 5 2 1,grow");
 
 		JButton btnSaveChanges = new JButton("Save Changes");
 		btnSaveChanges.setActionCommand("Save Changes");
 		btnSaveChanges.addActionListener(this);
 		frame.getContentPane().add(btnSaveChanges, "cell 0 6");
-		
+
 		textAreaLog = new JTextArea();
 		textAreaLog.setEditable(false);
-		//textPaneLog.setEditable(false);
+		// textPaneLog.setEditable(false);
 		frame.getContentPane().add(textAreaLog, "cell 0 7 2 1,grow");
 	}
 
@@ -267,8 +267,8 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 				preparedStatementUpdateAnime.setString(4, a.getNote());
 				preparedStatementUpdateAnime.setString(5, a.getRegEx());
 				preparedStatementUpdateAnime.setString(6, a.getName());
-				System.out.println("Anime: "+a.getName());
-				System.out.println("Commit RegEx: "+a.getRegEx());
+				System.out.println("Anime: " + a.getName());
+				System.out.println("Commit RegEx: " + a.getRegEx());
 				preparedStatementUpdateAnime.addBatch();
 			}
 			dbCon.setAutoCommit(false);
@@ -315,13 +315,17 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 			a.setLastWatched((int) spinnerLastSeenEpisode.getValue());
 			a.setNote(textPaneNotes.getText());
 			a.setRegEx(textFieldRegex.getText());
-			System.out.println("Set RegEx: "+textFieldRegex.getText());
+			System.out.println("Set RegEx: " + textFieldRegex.getText());
 		} else if (arg0.getActionCommand().equals("Check")) {
 			Anime a = getSelectedAnime();
 			try {
 				int lastEpisode = checker.getLastEpisode(a);
-				a.setLastOnline(lastEpisode);
-				spinnerLastOnlineEpisode.setValue(a.getLastOnline());
+				if (lastEpisode != -1) {
+					a.setLastOnline(lastEpisode);
+					spinnerLastOnlineEpisode.setValue(a.getLastOnline());
+				} else {
+					logln("Updating " + a.getName() + " failed!");
+				}
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -337,11 +341,18 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 							lastEpisode = checker.getLastEpisode(a);
 							int cLast = a.getLastOnline();
 							if (lastEpisode != cLast) {
-								a.setLastOnline(lastEpisode);
-								spinnerLastOnlineEpisode.setValue(a.getLastOnline());
-								logln("Update "+a.getName()+" from "+cLast+" to "+lastEpisode);
+								if (lastEpisode != -1) {
+									a.setLastOnline(lastEpisode);
+									spinnerLastOnlineEpisode.setValue(a
+											.getLastOnline());
+									logln("Update " + a.getName() + " from "
+											+ cLast + " to " + lastEpisode);
+								} else {
+									logln("Updating " + a.getName()
+											+ " failed!");
+								}
 							} else {
-								//logln(a.getName()+" was uptodate");
+								// logln(a.getName()+" was uptodate");
 							}
 						} catch (MalformedURLException e) {
 							// TODO Auto-generated catch block
@@ -349,7 +360,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 						}
 					}
 					logln("Finished Updating");
-					
+
 				}
 			};
 			Thread t = new Thread(check);
@@ -453,9 +464,9 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 	private Anime getSelectedAnime() {
 		return (Anime) comboBoxAnimes.getSelectedItem();
 	}
-	
+
 	private void logln(String s) {
-		textAreaLog.append(s+"\n");
+		textAreaLog.append(s + "\n");
 	}
 
 }

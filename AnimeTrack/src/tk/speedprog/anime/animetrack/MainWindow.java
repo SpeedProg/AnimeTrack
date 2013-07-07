@@ -17,6 +17,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
@@ -41,6 +42,7 @@ import javax.swing.JTextField;
 public class MainWindow implements MainWindowInterface, ActionListener,
 		WindowListener, ItemListener {
 
+	private static final String SQLPREP_ENTRY_RENAME = "UPDATE Anime SET name=? where name=?;";
 	private JFrame frame;
 	private Connection dbCon;
 	private LinkedList<Anime> animes;
@@ -54,6 +56,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 	JTextPane textPaneNotes;
 	private JTextField textFieldRegex;
 	private JTextArea textAreaLog;
+	private JButton btnRename;
 
 	/**
 	 * Launch the application.
@@ -197,6 +200,11 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		comboBox.addItemListener(this);
 		toolBar.add(comboBox);
 		toolBar.add(btnAddNew);
+		
+		btnRename = new JButton("Rename");
+		btnRename.setActionCommand("rename");
+		btnRename.addActionListener(this);
+		toolBar.add(btnRename);
 
 		comboBoxAnimes = new JComboBox<Anime>();
 		comboBoxAnimes.setEditable(false);
@@ -365,6 +373,22 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 			};
 			Thread t = new Thread(check);
 			t.start();
+		} else if (arg0.getActionCommand().equals("rename")) {
+			Anime a = getSelectedAnime();
+			String aName = a.getName();
+			String newName = JOptionPane.showInputDialog("Please enter the new name of the tracking object.", aName);
+			System.out.println("New Name: "+newName);
+			try {
+				PreparedStatement stat = dbCon.prepareStatement(SQLPREP_ENTRY_RENAME);
+				stat.setString(1, newName);
+				stat.setString(2, aName);
+				if (stat.executeUpdate() > 0)
+					a.setName(newName);
+				stat.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}

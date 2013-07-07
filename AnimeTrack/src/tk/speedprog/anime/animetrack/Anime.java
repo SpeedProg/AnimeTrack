@@ -32,6 +32,10 @@ public class Anime {
 		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public Anime(String name, String url, String regEx, int lastWatchedEpisode) {
 		this(name, url, lastWatchedEpisode, 0, "", regEx);
 	}

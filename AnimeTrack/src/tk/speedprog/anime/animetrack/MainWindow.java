@@ -24,10 +24,12 @@ import javax.swing.JTextPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
+
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteConfig.LockingMode;
 
 import tk.speedprog.anime.animetrack.sitehandlers.animehere.AnimehereSiteHandler;
+import tk.speedprog.anime.animetrack.sitehandlers.starkanacom.StarkanacomSiteHandler;
 import tk.speedprog.anime.animetrack.sitehandlers.tokyoinsidernet.TokyoinsidernetSiteHandler;
 import tk.speedprog.anime.animetrack.ComboBoxRenderer;
 
@@ -37,6 +39,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
 import javax.swing.JTextField;
 
 public class MainWindow implements MainWindowInterface, ActionListener,
@@ -89,6 +92,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		checker = new EpisodeChecker();
 		checker.registerHandler(new AnimehereSiteHandler());
 		checker.registerHandler(new TokyoinsidernetSiteHandler());
+		checker.registerHandler(new StarkanacomSiteHandler());
 		initializeDb();
 		createTableIfNotExists();
 		loadAnimesFromDb();

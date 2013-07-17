@@ -41,6 +41,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JTextField;
+import javax.swing.JScrollPane;
 
 public class MainWindow implements MainWindowInterface, ActionListener,
 		WindowListener, ItemListener {
@@ -60,6 +61,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 	private JTextField textFieldRegex;
 	private JTextArea textAreaLog;
 	private JButton btnRename;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -260,11 +262,13 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		btnSaveChanges.setActionCommand("Save Changes");
 		btnSaveChanges.addActionListener(this);
 		frame.getContentPane().add(btnSaveChanges, "cell 0 6");
+		
+		scrollPane = new JScrollPane();
+		frame.getContentPane().add(scrollPane, "cell 0 7 2 1,grow");
 
 		textAreaLog = new JTextArea();
+		scrollPane.setViewportView(textAreaLog);
 		textAreaLog.setEditable(false);
-		// textPaneLog.setEditable(false);
-		frame.getContentPane().add(textAreaLog, "cell 0 7 2 1,grow");
 	}
 
 	private void cleanUp() {

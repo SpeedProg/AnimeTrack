@@ -353,18 +353,19 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 							lastEpisode = checker.getLastEpisode(a);
 							int cLast = a.getLastOnline();
 							if (lastEpisode != cLast) {
+								logln("Last Episode for "+a.getName()+" is "+lastEpisode+".");
 								if (lastEpisode != -1) {
 									a.setLastOnline(lastEpisode);
 									spinnerLastOnlineEpisode.setValue(a
 											.getLastOnline());
-									logln("Update " + a.getName() + " from "
+									logln("Updated " + a.getName() + " from "
 											+ cLast + " to " + lastEpisode);
 								} else {
 									logln("Updating " + a.getName()
 											+ " failed!");
 								}
 							} else {
-								// logln(a.getName()+" was uptodate");
+								logln(a.getName()+" was uptodate.");
 							}
 						} catch (MalformedURLException e) {
 							// TODO Auto-generated catch block

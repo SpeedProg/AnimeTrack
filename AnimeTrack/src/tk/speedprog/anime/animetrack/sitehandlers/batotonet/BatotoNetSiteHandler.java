@@ -25,8 +25,6 @@ public class BatotoNetSiteHandler implements SiteHandler {
 		int lastChap = 0;
 		URL siteUrl = new URL(url);
 		String webSource = tk.speedprog.utils.WebContentUtils.getContentOfUrl(siteUrl);
-		// we need this list because there is more then one scanlation
-		// some times on batoto
 		Matcher chaptersMatcher = PATTERN_CHAPTERS.matcher(webSource);
 		while (chaptersMatcher.find()) {
 			String id = chaptersMatcher.group(2);
@@ -40,6 +38,18 @@ public class BatotoNetSiteHandler implements SiteHandler {
 			}
 		}
 		return lastChap;
+	}
+	
+	public static void main(String[] args) {
+		BatotoNetSiteHandler handler = new BatotoNetSiteHandler();
+		String testUrl1 = "http://www.batoto.net/comic/_/comics/dakara-boku-wa-h-ga-dekinai-r482";
+		try {
+			int last = handler.getLastEpisodeFor(testUrl1, null);
+			System.out.println("Last Episode was: "+last);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

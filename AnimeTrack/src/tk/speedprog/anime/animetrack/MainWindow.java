@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 
 import javax.swing.JFrame;
+
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.DefaultComboBoxModel;
@@ -29,6 +30,7 @@ import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteConfig.LockingMode;
 
 import tk.speedprog.anime.animetrack.sitehandlers.animehere.AnimehereSiteHandler;
+import tk.speedprog.anime.animetrack.sitehandlers.batotonet.BatotoNetSiteHandler;
 import tk.speedprog.anime.animetrack.sitehandlers.starkanacom.StarkanacomSiteHandler;
 import tk.speedprog.anime.animetrack.sitehandlers.tokyoinsidernet.TokyoinsidernetSiteHandler;
 import tk.speedprog.anime.animetrack.ComboBoxRenderer;
@@ -95,6 +97,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		checker.registerHandler(new AnimehereSiteHandler());
 		checker.registerHandler(new TokyoinsidernetSiteHandler());
 		checker.registerHandler(new StarkanacomSiteHandler());
+		checker.registerHandler(new BatotoNetSiteHandler());
 		initializeDb();
 		createTableIfNotExists();
 		loadAnimesFromDb();

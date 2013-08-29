@@ -1,5 +1,14 @@
 package tk.speedprog.anime.animetrack;
 
+/**
+ * Enum for stats of the animes/mangas what ever.
+ * @author SpeedProg
+ *
+ */
 public enum AnimeStatus {
-	FOLLOWING, WATCHING, FINISHED, NOTSTARTED
+	/**
+	 * Anime/Manga/What ever states.
+	 */
+	FOLLOWING(), WATCHING, FINISHED, NOTSTARTED
+	
 }

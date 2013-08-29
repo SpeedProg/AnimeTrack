@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 
 import javax.swing.JFrame;
@@ -44,6 +46,7 @@ import java.awt.event.WindowListener;
 
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
 public class MainWindow implements MainWindowInterface, ActionListener,
 		WindowListener, ItemListener {
@@ -64,6 +67,8 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 	private JTextArea textAreaLog;
 	private JButton btnRename;
 	private JScrollPane scrollPane;
+	private JLabel lblUrl;
+	private JTextField textFieldUrl;
 
 	/**
 	 * Launch the application.
@@ -152,6 +157,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Collections.sort(animes, new AnimeComperator());
 	}
 
 	private void addAnimeToDb(Anime a) {
@@ -182,12 +188,12 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(
-				new MigLayout("", "[grow][grow]", "[][][][][][grow][][grow]"));
+				new MigLayout("", "[][grow][grow]", "[][][][][][][grow][][grow]"));
 		frame.addWindowListener(this);
 
 		JToolBar toolBar = new JToolBar();
 		toolBar.setFloatable(false);
-		frame.getContentPane().add(toolBar, "flowx,cell 0 0 2 1");
+		frame.getContentPane().add(toolBar, "flowx,cell 0 0 3 1");
 
 		JButton btnCheck = new JButton("Check");
 		btnCheck.setActionCommand("Check");
@@ -219,7 +225,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		comboBoxAnimes.setEditable(false);
 		comboBoxAnimes.setRenderer(new ComboBoxRenderer<Anime>());
 		comboBoxAnimes.setModel(new DefaultComboBoxModel<Anime>());
-		frame.getContentPane().add(comboBoxAnimes, "cell 0 1 2 1,growx");
+		frame.getContentPane().add(comboBoxAnimes, "cell 0 1 3 1,growx");
 		DefaultComboBoxModel<Anime> comboBoxModel = (DefaultComboBoxModel<Anime>) comboBoxAnimes
 				.getModel();
 		for (Anime a : animes) {
@@ -237,7 +243,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		if (a != null)
 			spinnerLastSeenEpisode.setValue(a.getLastWatched());
 
-		frame.getContentPane().add(spinnerLastSeenEpisode, "cell 1 2,growx");
+		frame.getContentPane().add(spinnerLastSeenEpisode, "cell 1 2 2 1,growx");
 
 		JLabel lblLetzeOnlineFolge = new JLabel("Letze online Folge:");
 		frame.getContentPane().add(lblLetzeOnlineFolge, "cell 0 3");
@@ -245,29 +251,37 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		spinnerLastOnlineEpisode = new JSpinner();
 		if (a != null)
 			spinnerLastOnlineEpisode.setValue(a.getLastOnline());
-		frame.getContentPane().add(spinnerLastOnlineEpisode, "cell 1 3,growx");
+		frame.getContentPane().add(spinnerLastOnlineEpisode, "cell 1 3 2 1,growx");
 
 		JLabel lblRegex = new JLabel("RegEx:");
+		lblRegex.setHorizontalAlignment(SwingConstants.LEFT);
 		frame.getContentPane().add(lblRegex, "cell 0 4,alignx trailing");
 
 		textFieldRegex = new JTextField();
 		if (a != null)
 			textFieldRegex.setText(a.getRegEx());
-		frame.getContentPane().add(textFieldRegex, "cell 1 4,growx");
+		frame.getContentPane().add(textFieldRegex, "cell 1 4 2 1,growx");
 		textFieldRegex.setColumns(10);
 
 		textPaneNotes = new JTextPane();
 		if (a != null)
 			textPaneNotes.setText(a.getNote());
-		frame.getContentPane().add(textPaneNotes, "cell 0 5 2 1,grow");
+		
+		lblUrl = new JLabel("Url:");
+		frame.getContentPane().add(lblUrl, "cell 0 5,alignx trailing");
+		
+		textFieldUrl = new JTextField();
+		frame.getContentPane().add(textFieldUrl, "cell 1 5 2 1,growx");
+		textFieldUrl.setColumns(10);
+		frame.getContentPane().add(textPaneNotes, "cell 0 6 3 1,grow");
 
 		JButton btnSaveChanges = new JButton("Save Changes");
 		btnSaveChanges.setActionCommand("Save Changes");
 		btnSaveChanges.addActionListener(this);
-		frame.getContentPane().add(btnSaveChanges, "cell 0 6");
+		frame.getContentPane().add(btnSaveChanges, "cell 0 7");
 		
 		scrollPane = new JScrollPane();
-		frame.getContentPane().add(scrollPane, "cell 0 7 2 1,grow");
+		frame.getContentPane().add(scrollPane, "cell 0 8 3 1,grow");
 
 		textAreaLog = new JTextArea();
 		scrollPane.setViewportView(textAreaLog);
@@ -455,6 +469,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 				spinnerLastOnlineEpisode.setValue(a.getLastOnline());
 				spinnerLastSeenEpisode.setValue(a.getLastWatched());
 				textFieldRegex.setText(a.getRegEx());
+				textFieldUrl.setText(a.getUrl());
 			} else if (e.getSource() == comboBox) {
 				AnimeStatus animeStatus = (AnimeStatus) e.getItem();
 				DefaultComboBoxModel<Anime> model = (DefaultComboBoxModel<Anime>) comboBoxAnimes
@@ -505,4 +520,11 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		textAreaLog.append(s + "\n");
 	}
 
+	class AnimeComperator implements Comparator<Anime> {
+		@Override
+		public int compare(Anime o1, Anime o2) {
+			return o1.getName().compareTo(o2.getName());
+		}
+		
+	}
 }

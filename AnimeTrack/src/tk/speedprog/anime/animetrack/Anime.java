@@ -1,53 +1,112 @@
 package tk.speedprog.anime.animetrack;
 
+/**
+ * Class to hold all informations about an anime.
+ * 
+ * @author SpeedProg
+ * 
+ */
 public class Anime {
 
+	/**
+	 * Fields hold lastOnline chapter number, and last watched chapter number.
+	 */
 	private int lastOnline, lastWatched;
+	/**
+	 * Fields holding other anime attributes.
+	 */
 	private String url, name, note, regEx;
 
-	public Anime(String name, String url, int lastWatchedEpisode,
-			int lastKnownEpisode, String note, String regEx) {
-		this.url = url;
-		this.name = name;
+	/**
+	 * Create an anime Object.
+	 * 
+	 * @param animeName
+	 *            Name the anime
+	 * @param animeUrl
+	 *            Url of the anime
+	 * @param animeLastWatchedEpisode
+	 *            Last watched episode
+	 * @param lastKnownEpisode
+	 *            last found episode
+	 * @param animeNote
+	 *            notices
+	 * @param animeRegEx
+	 *            REX to use for search
+	 */
+	public Anime(final String animeName, final String animeUrl,
+			final int animeLastWatchedEpisode, final int lastKnownEpisode,
+			final String animeNote, final String animeRegEx) {
+		this.url = animeUrl;
+		this.name = animeName;
 		this.lastOnline = lastKnownEpisode;
-		this.lastWatched = lastWatchedEpisode;
-		this.note = note;
-		if (regEx == null)
+		this.lastWatched = animeLastWatchedEpisode;
+		this.note = animeNote;
+		if (animeRegEx == null) {
 			this.regEx = "";
-		else
-			this.regEx = regEx;
+		} else {
+			this.regEx = animeRegEx;
+		}
 	}
 
 	/**
 	 * @return the url
 	 */
-	public String getUrl() {
+	public final String getUrl() {
 		return url;
 	}
 
 	/**
 	 * @return the name
 	 */
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public Anime(String name, String url, String regEx, int lastWatchedEpisode) {
-		this(name, url, lastWatchedEpisode, 0, "", regEx);
+	/**
+	 * 
+	 * @param animeName
+	 *            the name
+	 */
+	public final void setName(final String animeName) {
+		this.name = animeName;
 	}
 
-	public Anime(String name, String url, String regEx) {
-		this(name, url, 0, 0, "", regEx);
+	/**
+	 * Create an anime.
+	 * 
+	 * @param animeName
+	 *            Name the anime
+	 * @param animeUrl
+	 *            Url of the anime
+	 * @param animeLastWatchedEpisode
+	 *            Last watched episode
+	 * @param animeRegEx
+	 *            REX to use for search
+	 */
+	public Anime(final String animeName, final String animeUrl,
+			final String animeRegEx, final int animeLastWatchedEpisode) {
+		this(animeName, animeUrl, animeLastWatchedEpisode, 0, "", animeRegEx);
+	}
+
+	/**
+	 * Create an anime.
+	 * 
+	 * @param animeName
+	 *            name of the Anime
+	 * @param animeUrl
+	 *            Animes url
+	 * @param animeRegEx
+	 *            REX to use for chapter finding
+	 */
+	public Anime(final String animeName, final String animeUrl,
+			final String animeRegEx) {
+		this(animeName, animeUrl, 0, 0, "", animeRegEx);
 	}
 
 	/**
 	 * @return the lastKnownEpisode
 	 */
-	public int getLastOnline() {
+	public final int getLastOnline() {
 		return lastOnline;
 	}
 
@@ -55,69 +114,74 @@ public class Anime {
 	 * @param lastKnownEpisode
 	 *            the lastKnownEpisode to set
 	 */
-	public void setLastOnline(int lastOnline) {
-		this.lastOnline = lastOnline;
+	public final void setLastOnline(final int lastKnownEpisode) {
+		this.lastOnline = lastKnownEpisode;
 	}
 
 	/**
 	 * @return the lastWatchedEpisode
 	 */
-	public int getLastWatched() {
+	public final int getLastWatched() {
 		return lastWatched;
 	}
 
 	/**
-	 * @param lastWatchedEpisode
+	 * @param animeLastWatched
 	 *            the lastWatchedEpisode to set
 	 */
-	public void setLastWatched(int lastWatched) {
-		this.lastWatched = lastWatched;
+	public final void setLastWatched(final int animeLastWatched) {
+		this.lastWatched = animeLastWatched;
 	}
 
 	@Override
-	public String toString() {
-		return name;
+	public final String toString() {
+		return (name + "(" + (lastOnline - lastWatched) + ")");
 	}
 
 	/**
 	 * @return the note
 	 */
-	public String getNote() {
+	public final String getNote() {
 		return note;
 	}
 
 	/**
-	 * @param note
+	 * @param animeNote
 	 *            the note to set
 	 */
-	public void setNote(String note) {
-		this.note = note;
+	public final void setNote(final String animeNote) {
+		this.note = animeNote;
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public final boolean equals(final Object o) {
 		if (o instanceof Anime && ((Anime) o).getName().equals(this.name)) {
 			return true;
 		}
 		return false;
 	}
 
+	@Override
+	public final int hashCode() {
+		return getName().hashCode();
+	}
+
 	/**
 	 * @return the regEx
 	 */
-	public String getRegEx() {
+	public final String getRegEx() {
 		return regEx;
 	}
 
 	/**
-	 * @param regEx
+	 * @param animeRegEx
 	 *            the regEx to set
 	 */
-	public void setRegEx(String regEx) {
-		if (regEx == null) {
-			regEx = "";
+	public final void setRegEx(final String animeRegEx) {
+		if (animeRegEx == null) {
+			this.regEx = "";
 		}
-		this.regEx = regEx;
+		this.regEx = animeRegEx;
 	}
 
 }

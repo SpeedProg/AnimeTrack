@@ -22,7 +22,7 @@ public class StarkanacomSiteHandler extends DefaultSiteHandler {
 		// tests
 		URL url;
 		try {
-			url = new URL("http://starkana.com/manga/F/Freezing");
+			url = new URL("http://starkana.com/manga/T/The_Breaker:_New_Waves");
 			SiteHandler h = new StarkanacomSiteHandler();
 			if (h.isHandled(url.getHost())) {
 				int lC = h.getLastEpisodeFor(url.toString(), "");
@@ -62,7 +62,7 @@ public class StarkanacomSiteHandler extends DefaultSiteHandler {
 			 * <div class="episode c_h2">
 			 * <div class="episode c_h2b">
 			 */
-			String episodeDivRegEx = "<div class=\"zxz episode c_h2[b]{0,1}\">\\s+<div><a class=\"download-link\" href=\"/manga/\\w/.+/chapter/[\\d\\.]+\">.+ <em>chapter</em> <strong>([\\d\\.]+)</strong></a>.*\\s+</div>\\s+<div class=\"clear\"></div>\\s+</div>";
+			String episodeDivRegEx = "<a class=\"download-link\" href=\"/manga/\\w/.+/chapter/[\\d\\.]+\">.+ <em>chapter</em> <strong>([\\d\\.]+)</strong></a>";
 			Pattern episodeDivPattern = Pattern.compile(episodeDivRegEx);
 			Matcher matcher = episodeDivPattern.matcher(siteContent);
 			while (matcher.find()) {

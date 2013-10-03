@@ -1,6 +1,8 @@
 package tk.speedprog.anime.animetrack;
 
 import java.awt.EventQueue;
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -47,6 +49,8 @@ import java.awt.event.WindowListener;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+
+import java.awt.event.KeyEvent;
 
 public class MainWindow implements MainWindowInterface, ActionListener,
 		WindowListener, ItemListener {
@@ -163,7 +167,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		Collections.sort(animes, new AnimeComperator());
 	}
 
-	private void addAnimeToDb(Anime a) {
+	private void addAnimeToDb(final Anime a) {
 		Statement stat = null;
 		try {
 			stat = dbCon.createStatement();
@@ -191,7 +195,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(
-				new MigLayout("", "[][grow][grow]", "[][][][][][][grow][][grow]"));
+				new MigLayout("", "[][grow][grow]", "[][][][][][][][grow][][grow]"));
 		frame.addWindowListener(this);
 
 		JToolBar toolBar = new JToolBar();
@@ -340,7 +344,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 	}
 
 	@Override
-	public void addAnime(Anime a) {
+	public final void addAnime(final Anime a) {
 		if (!animes.contains(a)) {
 			animes.add(a);
 			addAnimeToDb(a);
@@ -350,7 +354,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public final void actionPerformed(final ActionEvent arg0) {
 		if (arg0.getActionCommand().equals("Add New")) {
 			AddAnimeDialog dialog = new AddAnimeDialog(this);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -415,14 +419,19 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		} else if (arg0.getActionCommand().equals("rename")) {
 			Anime a = getSelectedAnime();
 			String aName = a.getName();
-			String newName = JOptionPane.showInputDialog("Please enter the new name of the tracking object.", aName);
-			System.out.println("New Name: "+newName);
+			String newName = JOptionPane.
+					showInputDialog(
+							"Please enter the new name of the tracking object.",
+							aName);
+			System.out.println("New Name: " + newName);
 			try {
-				PreparedStatement stat = dbCon.prepareStatement(SQLPREP_ENTRY_RENAME);
+				PreparedStatement stat =
+						dbCon.prepareStatement(SQLPREP_ENTRY_RENAME);
 				stat.setString(1, newName);
 				stat.setString(2, aName);
-				if (stat.executeUpdate() > 0)
+				if (stat.executeUpdate() > 0) {
 					a.setName(newName);
+				}
 				stat.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -452,48 +461,48 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 	}
 
 	@Override
-	public void windowActivated(WindowEvent e) {
+	public void windowActivated(final WindowEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void windowClosed(WindowEvent e) {
+	public void windowClosed(final WindowEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void windowClosing(WindowEvent e) {
+	public final void windowClosing(final WindowEvent e) {
 		cleanUp();
 	}
 
 	@Override
-	public void windowDeactivated(WindowEvent e) {
+	public void windowDeactivated(final WindowEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void windowDeiconified(WindowEvent e) {
+	public void windowDeiconified(final WindowEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void windowIconified(WindowEvent e) {
+	public void windowIconified(final WindowEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void windowOpened(WindowEvent e) {
+	public void windowOpened(final WindowEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void itemStateChanged(ItemEvent e) {
+	public final void itemStateChanged(final ItemEvent e) {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
 			if (e.getSource() == comboBoxAnimes) {
 				Anime a = (Anime) e.getItem();
@@ -504,8 +513,8 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 				textFieldUrl.setText(a.getUrl());
 			} else if (e.getSource() == comboBox) {
 				AnimeStatus animeStatus = (AnimeStatus) e.getItem();
-				DefaultComboBoxModel<Anime> model = (DefaultComboBoxModel<Anime>) comboBoxAnimes
-						.getModel();
+				DefaultComboBoxModel<Anime> model =
+						(DefaultComboBoxModel<Anime>) comboBoxAnimes.getModel();
 				model.removeAllElements();
 				switch (animeStatus) {
 				case FOLLOWING:
@@ -548,13 +557,13 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		return (Anime) comboBoxAnimes.getSelectedItem();
 	}
 
-	private void logln(String s) {
+	private void logln(final String s) {
 		textAreaLog.append(s + "\n");
 	}
 
 	class AnimeComperator implements Comparator<Anime> {
 		@Override
-		public int compare(Anime o1, Anime o2) {
+		public int compare(final Anime o1, final Anime o2) {
 			return o1.getName().compareTo(o2.getName());
 		}
 		

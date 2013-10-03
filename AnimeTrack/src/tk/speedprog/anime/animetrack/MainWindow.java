@@ -51,6 +51,8 @@ import javax.swing.SwingConstants;
 public class MainWindow implements MainWindowInterface, ActionListener,
 		WindowListener, ItemListener {
 
+	private static final String MANGARIPPER_PATH = "F:\\Programme\\MangaRipper\\MangaRipper.jar";
+	private static final String MANGARIPPER_WORKINGDIR = "F:\\Programme\\MangaRipper";
 	private static final String SQLPREP_ENTRY_RENAME = "UPDATE Anime SET name=? where name=?;";
 	private JFrame frame;
 	private Connection dbCon;
@@ -69,11 +71,12 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 	private JScrollPane scrollPane;
 	private JLabel lblUrl;
 	private JTextField textFieldUrl;
+	private JButton btnExecuteRipper;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e1) {
@@ -240,8 +243,9 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		spinnerLastSeenEpisode = new JSpinner();
 		spinnerLastSeenEpisode.setModel(new SpinnerNumberModel(new Integer(0),
 				null, null, new Integer(1)));
-		if (a != null)
+		if (a != null) {
 			spinnerLastSeenEpisode.setValue(a.getLastWatched());
+		}
 
 		frame.getContentPane().add(spinnerLastSeenEpisode, "cell 1 2 2 1,growx");
 
@@ -249,8 +253,9 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		frame.getContentPane().add(lblLetzeOnlineFolge, "cell 0 3");
 
 		spinnerLastOnlineEpisode = new JSpinner();
-		if (a != null)
+		if (a != null) {
 			spinnerLastOnlineEpisode.setValue(a.getLastOnline());
+		}
 		frame.getContentPane().add(spinnerLastOnlineEpisode, "cell 1 3 2 1,growx");
 
 		JLabel lblRegex = new JLabel("RegEx:");
@@ -258,14 +263,16 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		frame.getContentPane().add(lblRegex, "cell 0 4,alignx trailing");
 
 		textFieldRegex = new JTextField();
-		if (a != null)
+		if (a != null) {
 			textFieldRegex.setText(a.getRegEx());
+		}
 		frame.getContentPane().add(textFieldRegex, "cell 1 4 2 1,growx");
 		textFieldRegex.setColumns(10);
 
 		textPaneNotes = new JTextPane();
-		if (a != null)
+		if (a != null) {
 			textPaneNotes.setText(a.getNote());
+		}
 		
 		lblUrl = new JLabel("Url:");
 		frame.getContentPane().add(lblUrl, "cell 0 5,alignx trailing");
@@ -273,15 +280,21 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		textFieldUrl = new JTextField();
 		frame.getContentPane().add(textFieldUrl, "cell 1 5 2 1,growx");
 		textFieldUrl.setColumns(10);
-		frame.getContentPane().add(textPaneNotes, "cell 0 6 3 1,grow");
+		
+		btnExecuteRipper = new JButton("Execute Ripper");
+		btnExecuteRipper.setActionCommand("ExecRipper");
+		btnExecuteRipper.addActionListener(this);
+		frame.getContentPane().add(btnExecuteRipper, "cell 0 6");
+		frame.getContentPane().add(textPaneNotes, "cell 0 7 3 1,grow");
 
 		JButton btnSaveChanges = new JButton("Save Changes");
+		btnSaveChanges.setMnemonic(KeyEvent.VK_S);
 		btnSaveChanges.setActionCommand("Save Changes");
 		btnSaveChanges.addActionListener(this);
-		frame.getContentPane().add(btnSaveChanges, "cell 0 7");
+		frame.getContentPane().add(btnSaveChanges, "cell 0 8");
 		
 		scrollPane = new JScrollPane();
-		frame.getContentPane().add(scrollPane, "cell 0 8 3 1,grow");
+		frame.getContentPane().add(scrollPane, "cell 0 9 3 1,grow");
 
 		textAreaLog = new JTextArea();
 		scrollPane.setViewportView(textAreaLog);
@@ -412,6 +425,25 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 					a.setName(newName);
 				stat.close();
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if (arg0.getActionCommand().equals("ExecRipper")) {
+			int startAt = ((int) spinnerLastSeenEpisode.getValue()) + 1;
+			String urlString = textFieldUrl.getText();
+			Anime anime = getSelectedAnime();
+			String name = anime.getName();
+			if (name.endsWith(" - Anime")) {
+				name = name.substring(0, name.length() - 8);
+			} else if (name.endsWith(" - Manga")) {
+				name = name.substring(0, name.length() - 8);
+			}
+			try {
+				Runtime.getRuntime().exec("java -jar " + MANGARIPPER_PATH
+						+ " \"" + urlString + "\" \"" + name + "\""
+						+ " " + String.valueOf(startAt), null,
+						new File(MANGARIPPER_WORKINGDIR));
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

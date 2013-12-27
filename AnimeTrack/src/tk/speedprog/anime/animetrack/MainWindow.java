@@ -1,6 +1,12 @@
 package tk.speedprog.anime.animetrack;
 
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -14,21 +20,23 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 
-import javax.swing.JFrame;
-
-import net.miginfocom.swing.MigLayout;
-
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.JToolBar;
-import javax.swing.JButton;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
+
+import net.miginfocom.swing.MigLayout;
 
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteConfig.LockingMode;
@@ -37,20 +45,6 @@ import tk.speedprog.anime.animetrack.sitehandlers.animehere.AnimehereSiteHandler
 import tk.speedprog.anime.animetrack.sitehandlers.batotonet.BatotoNetSiteHandler;
 import tk.speedprog.anime.animetrack.sitehandlers.starkanacom.StarkanacomSiteHandler;
 import tk.speedprog.anime.animetrack.sitehandlers.tokyoinsidernet.TokyoinsidernetSiteHandler;
-import tk.speedprog.anime.animetrack.ComboBoxRenderer;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-
-import javax.swing.JTextField;
-import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
-
-import java.awt.event.KeyEvent;
 
 public class MainWindow implements MainWindowInterface, ActionListener,
 		WindowListener, ItemListener {

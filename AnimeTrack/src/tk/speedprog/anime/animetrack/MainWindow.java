@@ -78,28 +78,6 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 	private JButton btnExecuteRipper;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(final String[] args) {
-		try {
-			Class.forName("org.sqlite.JDBC");
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-			System.exit(0);
-		}
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainWindow window = new MainWindow();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public MainWindow() {
@@ -553,6 +531,10 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 
 	}
 
+	public void setVisible(boolean vis) {
+		frame.setVisible(vis);
+	}
+	
 	private Anime getSelectedAnime() {
 		return (Anime) comboBoxAnimes.getSelectedItem();
 	}

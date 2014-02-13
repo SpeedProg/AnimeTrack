@@ -23,8 +23,8 @@ public class TokyoinsidernetSiteHandler extends DefaultSiteHandler {
 	}
 
 	@Override
-	public boolean isHandled(String host) {
-		if (host.equals("tokyoinsider.net")) {
+	public boolean isHandled(URL url) {
+		if (url.getHost().equals("tokyoinsider.net")) {
 			return true;
 		}
 		return false;

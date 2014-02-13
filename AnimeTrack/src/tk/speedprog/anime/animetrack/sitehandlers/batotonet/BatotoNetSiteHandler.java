@@ -12,8 +12,8 @@ public class BatotoNetSiteHandler implements SiteHandler {
 	private static final Pattern PATTERN_CHAPTERS = Pattern
 			.compile(REX_CHAPTERS);
 	@Override
-	public boolean isHandled(String host) {
-		if (host.equals("www.batoto.net")) {
+	public boolean isHandled(URL url) {
+		if (url.getHost().equals("www.batoto.net")) {
 			return true;
 		}
 		return false;

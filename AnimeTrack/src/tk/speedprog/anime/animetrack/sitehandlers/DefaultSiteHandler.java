@@ -12,7 +12,7 @@ public abstract class DefaultSiteHandler implements SiteHandler {
 	}
 
 	@Override
-	public abstract boolean isHandled(String host);
+	public abstract boolean isHandled(URL url);
 
 	@Override
 	public abstract int getLastEpisodeFor(String url, String regEx)

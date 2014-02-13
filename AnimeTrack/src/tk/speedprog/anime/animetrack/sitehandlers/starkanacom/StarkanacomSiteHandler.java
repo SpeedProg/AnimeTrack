@@ -17,14 +17,23 @@ public class StarkanacomSiteHandler extends DefaultSiteHandler {
 
 	/**
 	 * @param args
+	 * @throws MalformedURLException 
 	 */
 	public static void main(String[] args) {
 		// tests
+		URL url2;
+		try {
+			url2 = new URL("https://starkana.org/manga/A/Apocalypse_no_Toride");
+			System.out.println(""+url2.getHost()+" "+url2.getAuthority()+"  "+url2.getProtocol());
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		}
+		
 		URL url;
 		try {
-			url = new URL("http://starkana.com/manga/T/The_Breaker:_New_Waves");
+			url = new URL("https://starkana.org/manga/A/Apocalypse_no_Toride");
 			SiteHandler h = new StarkanacomSiteHandler();
-			if (h.isHandled(url.getHost())) {
+			if (h.isHandled(url)) {
 				int lC = h.getLastEpisodeFor(url.toString(), "");
 				System.out.println("Last chapter: "+lC);
 			} else {
@@ -39,8 +48,8 @@ public class StarkanacomSiteHandler extends DefaultSiteHandler {
 	}
 
 	@Override
-	public boolean isHandled(String host) {
-		if (host.equals("starkana.com")) {
+	public boolean isHandled(URL url) {
+		if ((url.getHost().equals("www.starkana.org") || url.getHost().equals("starkana.org") ) && url.getProtocol().equals("https")) {
 			return true;
 		}
 		return false;

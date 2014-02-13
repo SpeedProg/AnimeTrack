@@ -337,6 +337,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 			a.setLastWatched((int) spinnerLastSeenEpisode.getValue());
 			a.setNote(textPaneNotes.getText());
 			a.setRegEx(textFieldRegex.getText());
+			a.setUrl(textFieldUrl.getText());
 			System.out.println("Set RegEx: " + textFieldRegex.getText());
 		} else if (arg0.getActionCommand().equals("Check")) {
 			Anime a = getSelectedAnime();

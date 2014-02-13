@@ -56,6 +56,14 @@ public class Anime {
 	}
 
 	/**
+	 * Sets the url of the Anime
+	 * @param url the url to set
+	 */
+	public final void setUrl(String url) {
+		this.url = url;
+	}
+	
+	/**
 	 * @return the name
 	 */
 	public final String getName() {

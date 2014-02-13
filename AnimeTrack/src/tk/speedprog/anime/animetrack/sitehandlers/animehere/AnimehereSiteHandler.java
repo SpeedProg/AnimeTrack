@@ -18,8 +18,8 @@ public class AnimehereSiteHandler implements SiteHandler {
 	}
 
 	@Override
-	public boolean isHandled(String host) {
-		if (host.equals("www.animehere.com"))
+	public boolean isHandled(URL url) {
+		if (url.getHost().equals("www.animehere.com"))
 			return true;
 		return false;
 	}
@@ -168,7 +168,7 @@ public class AnimehereSiteHandler implements SiteHandler {
 		String regEx = "Haiyoru! Nyaruko-san W Episode (\\d+)";
 		AnimehereSiteHandler siteHandler = new AnimehereSiteHandler();
 		try {
-			if (siteHandler.isHandled((new URL(url)).getHost())) {
+			if (siteHandler.isHandled((new URL(url)))) {
 				System.out.println("Site is handled.");
 				Anime a = new Anime(name, url, regEx);
 				int episode = siteHandler.getLastEpisodeFor(a.getUrl(),

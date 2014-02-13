@@ -20,9 +20,8 @@ public class EpisodeChecker {
 	
 	public int getLastEpisode(Anime a) throws MalformedURLException {
 		URL url = new URL(a.getUrl());
-		String host = url.getHost();
 		for (SiteHandler sh : handlers) {
-			if (sh.isHandled(host)) {
+			if (sh.isHandled(url)) {
 				return sh.getLastEpisodeFor(a.getUrl(), a.getRegEx());
 			}
 		}

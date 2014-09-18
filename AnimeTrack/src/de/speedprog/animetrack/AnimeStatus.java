@@ -1,4 +1,4 @@
-package tk.speedprog.anime.animetrack;
+package de.speedprog.animetrack;
 
 /**
  * Enum for stats of the animes/mangas what ever.

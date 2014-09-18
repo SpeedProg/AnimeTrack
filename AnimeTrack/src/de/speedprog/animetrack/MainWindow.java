@@ -1,4 +1,4 @@
-package tk.speedprog.anime.animetrack;
+package de.speedprog.animetrack;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,10 +41,10 @@ import net.miginfocom.swing.MigLayout;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteConfig.LockingMode;
 
-import tk.speedprog.anime.animetrack.sitehandlers.animehere.AnimehereSiteHandler;
-import tk.speedprog.anime.animetrack.sitehandlers.batotonet.BatotoNetSiteHandler;
-import tk.speedprog.anime.animetrack.sitehandlers.starkanacom.StarkanacomSiteHandler;
-import tk.speedprog.anime.animetrack.sitehandlers.tokyoinsidernet.TokyoinsidernetSiteHandler;
+import de.speedprog.animetrack.sitehandlers.animehere.AnimehereSiteHandler;
+import de.speedprog.animetrack.sitehandlers.batotonet.BatotoNetSiteHandler;
+import de.speedprog.animetrack.sitehandlers.starkanacom.StarkanacomSiteHandler;
+import de.speedprog.animetrack.sitehandlers.tokyoinsidernet.TokyoinsidernetSiteHandler;
 
 public class MainWindow implements MainWindowInterface, ActionListener,
 		WindowListener, ItemListener {

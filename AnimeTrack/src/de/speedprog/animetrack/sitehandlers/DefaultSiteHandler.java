@@ -1,4 +1,4 @@
-package tk.speedprog.anime.animetrack.sitehandlers;
+package de.speedprog.animetrack.sitehandlers;
 
 import java.io.BufferedReader;
 import java.io.IOException;

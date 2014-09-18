@@ -1,4 +1,4 @@
-package tk.speedprog.anime.animetrack;
+package de.speedprog.animetrack;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

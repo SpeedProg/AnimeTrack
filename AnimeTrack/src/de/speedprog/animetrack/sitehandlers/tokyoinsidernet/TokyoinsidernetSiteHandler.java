@@ -1,4 +1,4 @@
-package tk.speedprog.anime.animetrack.sitehandlers.tokyoinsidernet;
+package de.speedprog.animetrack.sitehandlers.tokyoinsidernet;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -6,7 +6,7 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import tk.speedprog.anime.animetrack.sitehandlers.DefaultSiteHandler;
+import de.speedprog.animetrack.sitehandlers.DefaultSiteHandler;
 
 public class TokyoinsidernetSiteHandler extends DefaultSiteHandler {
 

@@ -1,4 +1,4 @@
-package tk.speedprog.anime.animetrack.sitehandlers.animehere;
+package de.speedprog.animetrack.sitehandlers.animehere;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,8 +9,8 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import tk.speedprog.anime.animetrack.Anime;
-import tk.speedprog.anime.animetrack.sitehandlers.SiteHandler;
+import de.speedprog.animetrack.Anime;
+import de.speedprog.animetrack.sitehandlers.SiteHandler;
 
 public class AnimehereSiteHandler implements SiteHandler {
 

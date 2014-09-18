@@ -1,4 +1,4 @@
-package tk.speedprog.anime.animetrack.sitehandlers;
+package de.speedprog.animetrack.sitehandlers;
 
 import java.net.MalformedURLException;
 import java.net.URL;

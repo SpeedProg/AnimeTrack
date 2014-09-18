@@ -1,10 +1,10 @@
-package tk.speedprog.anime.animetrack;
+package de.speedprog.animetrack;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
 
-import tk.speedprog.anime.animetrack.sitehandlers.SiteHandler;
+import de.speedprog.animetrack.sitehandlers.SiteHandler;
 
 public class EpisodeChecker {
 

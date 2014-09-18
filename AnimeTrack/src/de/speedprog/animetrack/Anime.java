@@ -1,4 +1,4 @@
-package tk.speedprog.anime.animetrack;
+package de.speedprog.animetrack;
 
 /**
  * Class to hold all informations about an anime.

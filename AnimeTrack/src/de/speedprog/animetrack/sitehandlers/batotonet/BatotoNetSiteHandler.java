@@ -1,11 +1,11 @@
-package tk.speedprog.anime.animetrack.sitehandlers.batotonet;
+package de.speedprog.animetrack.sitehandlers.batotonet;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import tk.speedprog.anime.animetrack.sitehandlers.SiteHandler;
+import de.speedprog.animetrack.sitehandlers.SiteHandler;
 
 public class BatotoNetSiteHandler implements SiteHandler {
 	private static final String REX_CHAPTERS = "<tr class=\"row lang_English chapter_row\">\\s+<td style=\"border-top:0;\">\\s+<a href=\"([\\w\\W&&[^\"]]+)\"><img src=\"http://www.batoto.net/book_open.png\" style=\"vertical-align:middle;\"/> (?:Vol.\\d+ ){0,1}Ch.(\\d+(?:\\.\\d+){0,1}).*</a>";

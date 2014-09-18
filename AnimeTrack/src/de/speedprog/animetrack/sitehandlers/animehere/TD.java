@@ -1,4 +1,4 @@
-package tk.speedprog.anime.animetrack.sitehandlers.animehere;
+package de.speedprog.animetrack.sitehandlers.animehere;
 
 public class TD {
 	private int start, end;

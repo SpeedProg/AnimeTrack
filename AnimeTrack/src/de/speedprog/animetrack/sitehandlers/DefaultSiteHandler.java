@@ -8,16 +8,7 @@ import java.net.URL;
 
 public abstract class DefaultSiteHandler implements SiteHandler {
 
-	public DefaultSiteHandler() {
-	}
 
-	@Override
-	public abstract boolean isHandled(URL url);
-
-	@Override
-	public abstract int getLastEpisodeFor(String url, String regEx)
-			throws MalformedURLException;
-	
 	protected String getContentOfUrl(URL url) throws IOException {
 		BufferedReader siteReader;
 		siteReader = new BufferedReader(new InputStreamReader(
@@ -29,14 +20,6 @@ public abstract class DefaultSiteHandler implements SiteHandler {
 		}
 		String siteSource = siteCode.toString();
 		return siteSource;
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

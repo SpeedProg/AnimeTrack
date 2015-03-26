@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -45,6 +46,11 @@ import de.speedprog.animetrack.sitehandlers.animehere.AnimehereSiteHandler;
 import de.speedprog.animetrack.sitehandlers.batotonet.BatotoNetSiteHandler;
 import de.speedprog.animetrack.sitehandlers.starkanacom.StarkanacomSiteHandler;
 import de.speedprog.animetrack.sitehandlers.tokyoinsidernet.TokyoinsidernetSiteHandler;
+
+import java.awt.Font;
+import java.awt.List;
+
+import javax.swing.UIManager;
 
 public class MainWindow implements MainWindowInterface, ActionListener,
 		WindowListener, ItemListener {
@@ -167,7 +173,8 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(
-				new MigLayout("", "[][grow][grow]", "[][][][][][][][grow][][grow]"));
+				new MigLayout("", "[][grow][grow]",
+						"[][][][][][][][grow][][grow]"));
 		frame.addWindowListener(this);
 
 		JToolBar toolBar = new JToolBar();
@@ -194,7 +201,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		comboBox.addItemListener(this);
 		toolBar.add(comboBox);
 		toolBar.add(btnAddNew);
-		
+
 		btnRename = new JButton("Rename");
 		btnRename.setActionCommand("rename");
 		btnRename.addActionListener(this);
@@ -214,6 +221,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		Anime a = (Anime) comboBoxAnimes.getSelectedItem();
 
 		JLabel lblLetzeGesehenFolge = new JLabel("Letze gesehen Folge:");
+		lblLetzeGesehenFolge.setFont(UIManager.getFont("Label.font"));
 		frame.getContentPane().add(lblLetzeGesehenFolge, "flowx,cell 0 2");
 
 		spinnerLastSeenEpisode = new JSpinner();
@@ -223,7 +231,8 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 			spinnerLastSeenEpisode.setValue(a.getLastWatched());
 		}
 
-		frame.getContentPane().add(spinnerLastSeenEpisode, "cell 1 2 2 1,growx");
+		frame.getContentPane()
+				.add(spinnerLastSeenEpisode, "cell 1 2 2 1,growx");
 
 		JLabel lblLetzeOnlineFolge = new JLabel("Letze online Folge:");
 		frame.getContentPane().add(lblLetzeOnlineFolge, "cell 0 3");
@@ -232,7 +241,8 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		if (a != null) {
 			spinnerLastOnlineEpisode.setValue(a.getLastOnline());
 		}
-		frame.getContentPane().add(spinnerLastOnlineEpisode, "cell 1 3 2 1,growx");
+		frame.getContentPane().add(spinnerLastOnlineEpisode,
+				"cell 1 3 2 1,growx");
 
 		JLabel lblRegex = new JLabel("RegEx:");
 		lblRegex.setHorizontalAlignment(SwingConstants.LEFT);
@@ -249,14 +259,14 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		if (a != null) {
 			textPaneNotes.setText(a.getNote());
 		}
-		
+
 		lblUrl = new JLabel("Url:");
 		frame.getContentPane().add(lblUrl, "cell 0 5,alignx trailing");
-		
+
 		textFieldUrl = new JTextField();
 		frame.getContentPane().add(textFieldUrl, "cell 1 5 2 1,growx");
 		textFieldUrl.setColumns(10);
-		
+
 		btnExecuteRipper = new JButton("Execute Ripper");
 		btnExecuteRipper.setActionCommand("ExecRipper");
 		btnExecuteRipper.addActionListener(this);
@@ -268,7 +278,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		btnSaveChanges.setActionCommand("Save Changes");
 		btnSaveChanges.addActionListener(this);
 		frame.getContentPane().add(btnSaveChanges, "cell 0 8");
-		
+
 		scrollPane = new JScrollPane();
 		frame.getContentPane().add(scrollPane, "cell 0 9 3 1,grow");
 
@@ -364,7 +374,8 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 							lastEpisode = checker.getLastEpisode(a);
 							int cLast = a.getLastOnline();
 							if (lastEpisode != cLast) {
-								logln("Last Episode for "+a.getName()+" is "+lastEpisode+".");
+								logln("Last Episode for " + a.getName()
+										+ " is " + lastEpisode + ".");
 								if (lastEpisode != -1) {
 									a.setLastOnline(lastEpisode);
 									spinnerLastOnlineEpisode.setValue(a
@@ -376,7 +387,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 											+ " failed!");
 								}
 							} else {
-								logln(a.getName()+" was uptodate.");
+								logln(a.getName() + " was uptodate.");
 							}
 						} catch (MalformedURLException e) {
 							// TODO Auto-generated catch block
@@ -392,14 +403,12 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 		} else if (arg0.getActionCommand().equals("rename")) {
 			Anime a = getSelectedAnime();
 			String aName = a.getName();
-			String newName = JOptionPane.
-					showInputDialog(
-							"Please enter the new name of the tracking object.",
-							aName);
+			String newName = JOptionPane.showInputDialog(
+					"Please enter the new name of the tracking object.", aName);
 			System.out.println("New Name: " + newName);
 			try {
-				PreparedStatement stat =
-						dbCon.prepareStatement(SQLPREP_ENTRY_RENAME);
+				PreparedStatement stat = dbCon
+						.prepareStatement(SQLPREP_ENTRY_RENAME);
 				stat.setString(1, newName);
 				stat.setString(2, aName);
 				if (stat.executeUpdate() > 0) {
@@ -420,15 +429,22 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 			} else if (name.endsWith(" - Manga")) {
 				name = name.substring(0, name.length() - 8);
 			}
+			java.util.List commands = new ArrayList<String>(5);
+			commands.add("java");
+			commands.add("-jar");
+			commands.add(MANGARIPPER_PATH);
+			commands.add(urlString);
+			commands.add(name.replace("\"", "\\\""));
+			commands.add(String.valueOf(startAt));
+			ProcessBuilder pBuilder = new ProcessBuilder(commands);
+			pBuilder.directory(new File(MANGARIPPER_WORKINGDIR));
 			try {
-				Runtime.getRuntime().exec("java -jar " + MANGARIPPER_PATH
-						+ " \"" + urlString + "\" \"" + name + "\""
-						+ " " + String.valueOf(startAt), null,
-						new File(MANGARIPPER_WORKINGDIR));
+				pBuilder.start();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 		}
 
 	}
@@ -486,8 +502,8 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 				textFieldUrl.setText(a.getUrl());
 			} else if (e.getSource() == comboBox) {
 				AnimeStatus animeStatus = (AnimeStatus) e.getItem();
-				DefaultComboBoxModel<Anime> model =
-						(DefaultComboBoxModel<Anime>) comboBoxAnimes.getModel();
+				DefaultComboBoxModel<Anime> model = (DefaultComboBoxModel<Anime>) comboBoxAnimes
+						.getModel();
 				model.removeAllElements();
 				switch (animeStatus) {
 				case FOLLOWING:
@@ -529,7 +545,7 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 	public void setVisible(boolean vis) {
 		frame.setVisible(vis);
 	}
-	
+
 	private Anime getSelectedAnime() {
 		return (Anime) comboBoxAnimes.getSelectedItem();
 	}

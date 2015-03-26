@@ -42,7 +42,7 @@ public class BatotoNetSiteHandler implements SiteHandler {
             throws MalformedURLException {
         int lastChap = 0;
         final URL siteUrl = new URL(url);
-        final String webSource = tk.speedprog.utils.WebContentUtils
+        final String webSource = de.speedprog.utils.WebContentUtils
                 .getContentOfUrl(siteUrl);
         final Matcher chaptersMatcher = PATTERN_CHAPTERS.matcher(webSource);
         while (chaptersMatcher.find()) {

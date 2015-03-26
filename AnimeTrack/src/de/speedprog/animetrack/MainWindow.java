@@ -541,8 +541,17 @@ public class MainWindow implements MainWindowInterface, ActionListener,
 	class AnimeComperator implements Comparator<Anime> {
 		@Override
 		public int compare(final Anime o1, final Anime o2) {
+			if (o1.getName() == null) {
+				if (o2.getName() == null) {
+					return 0;
+				}
+				return -1;
+			}
+			if (o2.getName() == null) {
+				return 1;
+			}
 			return o1.getName().compareTo(o2.getName());
 		}
-		
+
 	}
 }

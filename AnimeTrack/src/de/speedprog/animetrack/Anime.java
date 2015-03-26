@@ -36,6 +36,9 @@ public class Anime {
 	public Anime(final String animeName, final String animeUrl,
 			final int animeLastWatchedEpisode, final int lastKnownEpisode,
 			final String animeNote, final String animeRegEx) {
+		if (animeName == null || animeUrl == null || animeNote == null) {
+			throw new IllegalArgumentException();
+		}
 		this.url = animeUrl;
 		this.name = animeName;
 		this.lastOnline = lastKnownEpisode;
@@ -163,8 +166,15 @@ public class Anime {
 
 	@Override
 	public final boolean equals(final Object o) {
-		if (o instanceof Anime && ((Anime) o).getName().equals(this.name)) {
-			return true;
+		if (o instanceof Anime) {
+			Anime a = (Anime) o;
+			if (a.name == null && this.name == null) {
+				return true;
+			}
+			if (this.name == null) {
+				return false;
+			}
+			return this.name.equals(a.name);
 		}
 		return false;
 	}

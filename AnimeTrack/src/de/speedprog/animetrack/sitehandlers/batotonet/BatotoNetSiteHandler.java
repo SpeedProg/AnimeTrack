@@ -16,7 +16,9 @@ public class BatotoNetSiteHandler implements SiteHandler {
         } catch (final MalformedURLException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
+            return;
         }
+        
         final BatotoNetSiteHandler handler = new BatotoNetSiteHandler();
         if (handler.isHandled(url)) {
             try {

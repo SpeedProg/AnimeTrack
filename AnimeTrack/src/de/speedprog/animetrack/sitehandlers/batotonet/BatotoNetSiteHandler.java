@@ -33,7 +33,7 @@ public class BatotoNetSiteHandler implements SiteHandler {
         }
     }
 
-    private static final String REX_CHAPTERS = "<tr class=\"row lang_English chapter_row\">\\s+<td style=\"border-top:0;\">\\s+<a href=\"([\\w\\W&&[^\"]]+)\"><img src=\"http://bato.to/book_open.png\" style=\"vertical-align:middle;\"/> (?:Vol.\\d+ ){0,1}Ch.(\\d+(?:\\.\\d+){0,1}).*</a>";
+    private static final String REX_CHAPTERS = "<tr class=\"row lang_English chapter_row\">\\s+<td style=\"border-top:0;\">\\s+<a href=\"([\\w\\W&&[^\"]]+)\".*?><img src=\"http://bato.to/book_open.png\" style=\"vertical-align:middle;\"/> (?:Vol.\\d+ ){0,1}Ch.(\\d+(?:\\.\\d+){0,1}).*</a>";
     private static final Pattern PATTERN_CHAPTERS = Pattern
             .compile(REX_CHAPTERS);
 
@@ -44,6 +44,7 @@ public class BatotoNetSiteHandler implements SiteHandler {
         final URL siteUrl = new URL(url);
         final String webSource = de.speedprog.utils.WebContentUtils
                 .getContentOfUrl(siteUrl);
+        
         final Matcher chaptersMatcher = PATTERN_CHAPTERS.matcher(webSource);
         while (chaptersMatcher.find()) {
             final String id = chaptersMatcher.group(2);
